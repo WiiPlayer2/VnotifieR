@@ -88,9 +88,18 @@ Task("CopyBuildAssets")
 	CopyFiles(GetFiles("./BuildAssets/*"), "./Build");
 });
 
+Task("CopyLicenses")
+.Does(() => {
+	CopyFiles(GetFiles("./Licenses/*"), "./Build");
+});
+
+Task("Copy")
+.IsDependentOn("CopyBuildAssets")
+.IsDependentOn("CopyLicenses");
+
 Task("Pack")
 .IsDependentOn("Build")
-.IsDependentOn("CopyBuildAssets")
+.IsDependentOn("Copy")
 .Does(() => {
 	Zip("./Build", "./Build.zip");
 });
