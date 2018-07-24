@@ -1,6 +1,11 @@
 server.ini
+Build.zip
 
-# Created by https://www.gitignore.io/api/unity,visualstudiocode
+# Created by https://www.gitignore.io/api/cake,unity,visualstudiocode
+
+### Cake ###
+tools/*
+!tools/packages.config
 
 ### Unity ###
 [Ll]ibrary/
@@ -48,4 +53,4 @@ sysinfo.txt
 !.vscode/extensions.json
 
 
-# End of https://www.gitignore.io/api/unity,visualstudiocode
+# End of https://www.gitignore.io/api/cake,unity,visualstudiocode
