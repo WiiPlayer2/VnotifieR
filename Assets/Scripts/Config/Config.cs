@@ -6,22 +6,17 @@ using UnityEngine;
 
 public class Config
 {
-    public Config(string iniPath, string defaultContent)
+    public Config(string iniPath)
     {
+        Ini = new IniFile();
+
 #if !UNITY_EDITOR
-        if(!File.Exists(iniPath))
-        {
-            File.WriteAllText(iniPath, defaultContent);
-        }
-#else
-        //File.WriteAllText(iniPath, defaultContent);
+        if(File.Exists(iniPath))
+            Ini.Load(iniPath);
 #endif
 
-        Ini = new IniFile();
-        Ini.Load(iniPath);
-
-        Server = Ini.Sections["Server"].Deserialize<ServerConfig>();
-        Panel = Ini.Sections["Panel"].Deserialize<PanelConfig>();
+        Server = Load<ServerConfig>("Server");
+        Panel = Load<PanelConfig>("Panel");
 
         Save(iniPath);
     }
@@ -30,6 +25,17 @@ public class Config
 
     public ServerConfig Server { get; set; }
     public PanelConfig Panel { get; set; }
+
+    private T Load<T>(string section)
+        where T : class, new()
+    {
+        IniSection s;
+        if(Ini.Sections.Contains(section))
+            s = Ini.Sections[section];
+        else
+            s = Ini.Sections.Add(section);
+        return s.Deserialize<T>();
+    }
 
     public void Save(string iniPath)
     {

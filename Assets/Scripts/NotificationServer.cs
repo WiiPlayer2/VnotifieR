@@ -12,27 +12,23 @@ public class NotificationServer : MonoBehaviour
     public string IniPath;
     public NotificationPanel NotificationPanel;
 
-    private Ini ini;
     private Config config;
     private HttpListener httpListener;
     private IAsyncResult currentGetContext;
 
     void Start()
     {
-        config = new Config(IniPath, DefaultIniContent.text);
+        config = new Config(IniPath);
 
-        ini = new Ini(IniPath);
-        ini.Load();
-
-        NotificationPanel.SetConfig(ini);
+        NotificationPanel.SetConfig(config.Panel);
         InitServer();
     }
 
     private void InitServer()
     {
         httpListener = new HttpListener();
-        var port = ini.GetValue("port", "Server", "45689");
-        foreach(var bind in ini.GetValue("binds", "Server", "localhost,127.0.0.1").Split(','))
+        var port = config.Server.Port;
+        foreach(var bind in config.Server.Binds)
         {
             httpListener.Prefixes.Add(string.Format("http://{0}:{1}/", bind.Trim(), port));
         }

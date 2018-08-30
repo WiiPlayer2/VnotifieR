@@ -34,14 +34,14 @@ public class NotificationPanel : MonoBehaviour
         Overlay.SetOpacity(open ? dashOpacity : opacity);
     }
 
-    public void SetConfig(Ini ini)
+    public void SetConfig(PanelConfig cfg)
     {
-        TextPanel.color        = Helper.ParseColor(ini.GetValue("color", "Panel", "ffffff"), Color.white);
-        TextShadow.effectColor = Helper.ParseColor(ini.GetValue("shadow", "Panel", "000000"), Color.black);
-        TextPanel.fontSize     = Helper.ParseInt(ini.GetValue("font_size", "Panel", "30"), 30);
-        format                 = ini.GetValue("format", "Panel", "{0}: {1}");
-        opacity                = Helper.ParseFloat(ini.GetValue("opacity", "Panel", "0.2"), 0.2f);
-        dashOpacity            = Helper.ParseFloat(ini.GetValue("dashboard_opacity", "Panel", "1"), 1f);
+        TextPanel.color        = cfg.ColorP;
+        TextShadow.effectColor = cfg.ShadowP;
+        TextPanel.fontSize     = cfg.FontSize;
+        format                 = cfg.Format;
+        opacity                = cfg.Opacity;
+        dashOpacity            = cfg.DashboardOpacity;
     }
 
     public void Show(Notification notification)
