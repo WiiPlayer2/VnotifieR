@@ -1,0 +1,16 @@
+{
+    "source" : "builtin",
+    "applications": [{
+        "app_key": "info.darklink.vnotifier.server",
+        "launch_type": "binary",
+        "binary_path_windows": "VnotifieR.exe",
+        "arguments": "-batchmode -single-instance",
+
+        "strings": {
+            "en_us": {
+                "name": "VnotifieR",
+                "description": "VnotifieR Server"
+            }
+        }
+    }]
+}

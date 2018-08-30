@@ -15,6 +15,7 @@ public class Config
             Ini.Load(iniPath);
 #endif
 
+        Main = Load<MainConfig>("Main");
         Server = Load<ServerConfig>("Server");
         Panel = Load<PanelConfig>("Panel");
 
@@ -23,6 +24,7 @@ public class Config
 
     public IniFile Ini { get; private set; }
 
+    public MainConfig Main { get; set; }
     public ServerConfig Server { get; set; }
     public PanelConfig Panel { get; set; }
 
@@ -30,7 +32,7 @@ public class Config
         where T : class, new()
     {
         IniSection s;
-        if(Ini.Sections.Contains(section))
+        if (Ini.Sections.Contains(section))
             s = Ini.Sections[section];
         else
             s = Ini.Sections.Add(section);
@@ -39,6 +41,7 @@ public class Config
 
     public void Save(string iniPath)
     {
+        Refresh("Main", Main);
         Refresh("Server", Server);
         Refresh("Panel", Panel);
         Ini.Save(iniPath);

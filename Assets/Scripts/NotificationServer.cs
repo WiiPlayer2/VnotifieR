@@ -8,6 +8,9 @@ using MadMilkman.Ini;
 
 public class NotificationServer : MonoBehaviour
 {
+    //TODO: Maybe move to Constants class or something
+    public const string APP_KEY = "info.darklink.vnotifier.server";
+
     public TextAsset DefaultIniContent;
     public string IniPath;
     public NotificationPanel NotificationPanel;
@@ -20,8 +23,26 @@ public class NotificationServer : MonoBehaviour
     {
         config = new Config(IniPath);
 
+        StartCoroutine(ConfigVR());
+
         NotificationPanel.SetConfig(config.Panel);
         InitServer();
+    }
+
+    private IEnumerator ConfigVR()
+    {
+        var vr = OVR_Handler.instance;
+        yield return new WaitWhile(() => vr.Applications == null);
+
+#if !UNITY_EDITOR
+        Debug.LogFormat("AddApplicationManifest -> {0}",
+            vr.Applications.AddApplicationManifest(Path.GetFullPath("manifest.vrmanifest"), false));
+
+        var isAutostart = vr.Applications.GetApplicationAutoLaunch(APP_KEY);
+        if(isAutostart != config.Main.Autostart)
+            Debug.LogFormat("SetApplicationAutoLaunch({0}) -> {1}",
+                vr.Applications.SetApplicationAutoLaunch(APP_KEY, config.Main.Autostart));
+#endif
     }
 
     private void InitServer()
