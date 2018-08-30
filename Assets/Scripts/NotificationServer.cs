@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using System.Net;
+using MadMilkman.Ini;
 
 public class NotificationServer : MonoBehaviour
 {
@@ -12,19 +13,13 @@ public class NotificationServer : MonoBehaviour
     public NotificationPanel NotificationPanel;
 
     private Ini ini;
+    private Config config;
     private HttpListener httpListener;
     private IAsyncResult currentGetContext;
 
     void Start()
     {
-#if !UNITY_EDITOR
-        if(!File.Exists(IniPath))
-        {
-            File.WriteAllText(IniPath, DefaultIniContent.text);
-        }
-#else
-        File.WriteAllText(IniPath, DefaultIniContent.text);
-#endif
+        config = new Config(IniPath, DefaultIniContent.text);
 
         ini = new Ini(IniPath);
         ini.Load();
