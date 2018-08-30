@@ -8,7 +8,7 @@
 
 var target = Argument("target", "Default");
 var configuration = Argument("configuration", "Release");
-var unityVersion = "Unity 2018.2.0f2 (64-bit)";
+var unityVersion = "Unity 2018.2.5f1 (64-bit)";
 
 ///////////////////////////////////////////////////////////////////////////////
 // SETUP / TEARDOWN
