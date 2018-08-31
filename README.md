@@ -1,12 +1,21 @@
 # VnotifieR
 Notification server and overlay for OpenVR
 
+[![GitHub release](https://img.shields.io/github/release/WiiPlayer2/VnotifieR.svg)](https://github.com/WiiPlayer2/VnotifieR/releases/latest)
+[![Github Releases](https://img.shields.io/github/downloads/WiiPlayer2/VnotifieR/total.svg)](https://github.com/WiiPlayer2/VnotifieR/releases/latest)
+[![Github commits (since latest release)](https://img.shields.io/github/commits-since/WiiPlayer2/VnotifieR/latest.svg)](https://github.com/WiiPlayer2/VnotifieR/commits/master)
+
 ## Usage
 You will need an application that will communicate with the server.
 To send notifications to the server just send a `JSON` formatted `POST` request to `http://localhost:45689/notification` (with default settings).
 
 ## Configuration
 You can change settings after running the server for the first time and then editing the `server.ini`.
+
+### `[Main]`
+`Version`: Indicates the configuration version. Please do not edit if you don't know what that means. (Required for configuration backups)
+
+`Autostart`: Set to `true` if you want VnotifeR to start when SteamVR starts otherwise `false`
 
 ### `[Server]`
 `Binds`: Comma seperated values of names and addresses the http server should be bound to (example: `{localhost,127.0.0.1}`)

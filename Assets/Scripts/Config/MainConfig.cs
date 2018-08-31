@@ -9,10 +9,10 @@ public class MainConfig : SubConfig
         Autostart = true;
     }
 
-    public bool Autostart { get; set; }
-
     public string Version { get { return Get(); } set { Set(value); } }
 
     [IniSerialization(true)]
     public Version VersionP { get; set; }
+
+    public bool Autostart { get; set; }
 }
