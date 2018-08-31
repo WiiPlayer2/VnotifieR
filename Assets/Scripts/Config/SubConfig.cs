@@ -22,7 +22,10 @@ public abstract class SubConfig
                     return c;
                 return Color.white;
             },
-            c => ColorUtility.ToHtmlStringRGB(c));
+            c => "#" + ColorUtility.ToHtmlStringRGB(c));
+        Register<Version>(
+            s => Version.Parse(s),
+            v => v?.ToString());
     }
 
     private static void Register<T>(Func<string, T> set, Func<T, string> get)
@@ -55,6 +58,13 @@ public abstract class SubConfig
     protected void Set(string value, [CallerMemberName]string name = null)
     {
         var type = props[name].PropertyType;
-        props[name].SetValue(this, setter[type](value));
+        try
+        {
+            props[name].SetValue(this, setter[type](value));
+        }
+        catch(Exception e)
+        {
+            Debug.LogException(e);
+        }
     }
 }

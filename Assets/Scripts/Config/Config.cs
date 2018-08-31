@@ -1,3 +1,4 @@
+//#define FORCE_CREATE
 using System;
 using System.ComponentModel;
 using System.IO;
@@ -10,7 +11,7 @@ public class Config
     {
         Ini = new IniFile();
 
-#if !UNITY_EDITOR
+#if !FORCE_CREATE
         if(File.Exists(iniPath))
             Ini.Load(iniPath);
 #endif
@@ -19,6 +20,10 @@ public class Config
         Server = Load<ServerConfig>("Server");
         Panel = Load<PanelConfig>("Panel");
 
+        if(Main.VersionP != MainConfig.CURRENT_VERSION)
+            Save(string.Format("{0}_{1}.ini", Path.GetFileNameWithoutExtension(iniPath), Main.VersionP));
+
+        Main.VersionP = MainConfig.CURRENT_VERSION;
         Save(iniPath);
     }
 
