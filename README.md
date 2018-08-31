@@ -8,26 +8,35 @@ To send notifications to the server just send a `JSON` formatted `POST` request 
 ## Configuration
 You can change settings after running the server for the first time and then editing the `server.ini`.
 
-### [Server]
-`binds`: Comma seperated values of names and addresses the http server should be bound to
+### `[Server]`
+`Binds`: Comma seperated values of names and addresses the http server should be bound to (example: `{localhost,127.0.0.1}`)
 
-`port`: The port on which the http server should run on
+`Port`: The port on which the http server should run on
 
-### [Panel]
-`color`: The font color
+### `[Panel]`
+`Color`: The font color (has to start with `#` if hex; HTML color names are supported but converted)
 
-`shadow`: The shadow color
+`Shadow`: The shadow color (has to start with `#` if hex; HTML color names are supported but converted)
 
-`opacity`: The opacity while dashboard is closed
+`Opacity`: The opacity while dashboard is closed and after fade out
 
-`dashboard_opacity`: The opacity while dashboard is open
+`NotificationOpacity`: The opacity when receiving a new notification
 
-`font_size`: The font size
+`DashboardOpacity`: The opacity while dashboard is open
 
-`format`: The string format for the notification output. (Note: This will most likely change to named parameters instead of indexed ones.)
+`FadeTime`: The time in seconds it takes to fade to `Opacity` after receiving a new notification
+
+`FontSize`: The font size
+
+`Format`: The string format for the notification output. (Note: This will most likely change to named parameters instead of indexed ones.)
+
+### `[Overlay]`
+`Position`: The relative position of the panel to the HMD
+
+`Rotation`: The relative rotation (in euler angles) of the panel to the HMD
 
 ## Credits
 This projects uses
 * OVRlay package by Ben Otter (https://github.com/benotter/OVRLay)
-* INI file parser by L4rry (https://gist.github.com/Larry57/5725301)
+* MadMilkman.Ini by Mario Zorica (https://github.com/MarioZ/MadMilkman.Ini)
 * JSON Object by Defective Studios (https://assetstore.unity.com/packages/tools/input-management/json-object-710)
