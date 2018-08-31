@@ -13,9 +13,13 @@ public class Config
     {
         Ini = new IniFile();
 
+        var loaded = false;
 #if !FORCE_CREATE
-        if(File.Exists(iniPath))
+        if (File.Exists(iniPath))
+        {
             Ini.Load(iniPath);
+            loaded = true;
+        }
 #endif
 
         Main = Load<MainConfig>("Main");
@@ -23,8 +27,12 @@ public class Config
         Panel = Load<PanelConfig>("Panel");
         Overlay = Load<OverlayConfig>("Overlay");
 
-        if(Main.VersionP != CURRENT_VERSION)
-            Save(string.Format("{0}_{1}.ini", Path.GetFileNameWithoutExtension(iniPath), Main.VersionP));
+        if (loaded && Main.VersionP != CURRENT_VERSION)
+        {
+            var backupPath = string.Format("{0}_v{1}.ini", Path.GetFileNameWithoutExtension(iniPath), Main.VersionP);
+            File.Delete(backupPath);
+            File.Move(iniPath, backupPath);
+        }
 
         Main.VersionP = CURRENT_VERSION;
         Save(iniPath);

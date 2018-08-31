@@ -8,10 +8,10 @@ public class PanelConfig : SubConfig
     {
         ColorP = UnityEngine.Color.white;
         ShadowP = UnityEngine.Color.black;
-        Opacity = 0.2f;
+        Opacity = 0f;
         DashboardOpacity = 1f;
         NotificationOpacity = 0.6f;
-        FadeTime = 1f;
+        FadeTime = 3f;
         FontSize = 30;
         Format = "{0}: {1}";
     }
