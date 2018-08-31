@@ -23,7 +23,9 @@ public class NotificationServer : MonoBehaviour
     {
         config = new Config(IniPath);
 
+#if !UNITY_EDITOR
         StartCoroutine(ConfigVR());
+#endif
 
         NotificationPanel.SetConfig(config.Panel);
         InitServer();
@@ -34,15 +36,23 @@ public class NotificationServer : MonoBehaviour
         var vr = OVR_Handler.instance;
         yield return new WaitWhile(() => vr.Applications == null);
 
-#if !UNITY_EDITOR
+        var manifestPath = Path.GetFullPath("manifest.vrmanifest");
+        Debug.LogFormat("Manifest: {0}", manifestPath);
+
         Debug.LogFormat("AddApplicationManifest -> {0}",
-            vr.Applications.AddApplicationManifest(Path.GetFullPath("manifest.vrmanifest"), false));
+            vr.Applications.AddApplicationManifest(manifestPath, false));
 
         var isAutostart = vr.Applications.GetApplicationAutoLaunch(APP_KEY);
         if(isAutostart != config.Main.Autostart)
             Debug.LogFormat("SetApplicationAutoLaunch({0}) -> {1}",
+                config.Main.Autostart,
                 vr.Applications.SetApplicationAutoLaunch(APP_KEY, config.Main.Autostart));
-#endif
+
+        if(config.Main.Autostart)
+        {
+            yield return new WaitUntil(() => vr.Applications == null);
+            Application.Quit();
+        }
     }
 
     private void InitServer()

@@ -5,6 +5,7 @@
         "launch_type": "binary",
         "binary_path_windows": "VnotifieR.exe",
         "arguments": "-batchmode -single-instance",
+        "is_dashboard_overlay": true,
 
         "strings": {
             "en_us": {
