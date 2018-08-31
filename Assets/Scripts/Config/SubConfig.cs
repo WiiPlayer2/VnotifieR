@@ -4,6 +4,8 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using MadMilkman.Ini;
 using UnityEngine;
+using System.Linq;
+using System.Globalization;
 
 public abstract class SubConfig
 {
@@ -26,6 +28,22 @@ public abstract class SubConfig
         Register<Version>(
             s => Version.Parse(s),
             v => v?.ToString());
+        Register<Vector3>(
+            s => {
+                var values = s.Split(new []{','}, StringSplitOptions.RemoveEmptyEntries)
+                    .Select(o => {
+                        float v;
+                        var success = float.TryParse(o.Trim(), NumberStyles.Any, CultureInfo.InvariantCulture, out v);
+                        return Tuple.Create(success, v);
+                    })
+                    .Where(o => o.Item1)
+                    .Select(o => o.Item2)
+                    .ToArray();
+                if(values.Length != 3)
+                    return Vector3.zero;
+                return new Vector3(values[0], values[1], values[2]);
+            },
+            v => string.Format(CultureInfo.InvariantCulture, "{0},{1},{2}", v.x, v.y, v.z));
     }
 
     private static void Register<T>(Func<string, T> set, Func<T, string> get)

@@ -7,6 +7,8 @@ using UnityEngine;
 
 public class Config
 {
+    public static readonly Version CURRENT_VERSION = new Version(1, 0);
+
     public Config(string iniPath)
     {
         Ini = new IniFile();
@@ -19,11 +21,12 @@ public class Config
         Main = Load<MainConfig>("Main");
         Server = Load<ServerConfig>("Server");
         Panel = Load<PanelConfig>("Panel");
+        Overlay = Load<OverlayConfig>("Overlay");
 
-        if(Main.VersionP != MainConfig.CURRENT_VERSION)
+        if(Main.VersionP != CURRENT_VERSION)
             Save(string.Format("{0}_{1}.ini", Path.GetFileNameWithoutExtension(iniPath), Main.VersionP));
 
-        Main.VersionP = MainConfig.CURRENT_VERSION;
+        Main.VersionP = CURRENT_VERSION;
         Save(iniPath);
     }
 
@@ -32,6 +35,7 @@ public class Config
     public MainConfig Main { get; set; }
     public ServerConfig Server { get; set; }
     public PanelConfig Panel { get; set; }
+    public OverlayConfig Overlay { get; set; }
 
     private T Load<T>(string section)
         where T : class, new()
@@ -49,6 +53,7 @@ public class Config
         Refresh("Main", Main);
         Refresh("Server", Server);
         Refresh("Panel", Panel);
+        Refresh("Overlay", Overlay);
         Ini.Save(iniPath);
     }
 

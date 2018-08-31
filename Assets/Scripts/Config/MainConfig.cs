@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class MainConfig : SubConfig
 {
-    public static readonly Version CURRENT_VERSION = new Version(1, 0);
-
     public MainConfig()
     {
         Autostart = true;

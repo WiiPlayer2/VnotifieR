@@ -11,9 +11,9 @@ public class NotificationServer : MonoBehaviour
     //TODO: Maybe move to Constants class or something
     public const string APP_KEY = "info.darklink.vnotifier.server";
 
-    public TextAsset DefaultIniContent;
     public string IniPath;
     public NotificationPanel NotificationPanel;
+    public GameObject Overlay;
 
     private Config config;
     private HttpListener httpListener;
@@ -27,8 +27,16 @@ public class NotificationServer : MonoBehaviour
         StartCoroutine(ConfigVR());
 #endif
 
+        ConfigOverlay(config.Overlay);
+
         NotificationPanel.SetConfig(config.Panel);
         InitServer();
+    }
+
+    private void ConfigOverlay(OverlayConfig cfg)
+    {
+        Overlay.transform.position = cfg.PositionP;
+        Overlay.transform.rotation = Quaternion.Euler(cfg.RotationP);
     }
 
     private IEnumerator ConfigVR()
